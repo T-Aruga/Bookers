@@ -1,0 +1,86 @@
+<section>
+    <div class="container">
+        <div class="row">
+          <!-- ユーザー情報 and 新規投稿 -->
+            <div class="col-xs-3">
+          <!-- ユーザー情報 -->
+              <h2>User info</h2>
+              <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg", size:'60x60' %>
+                  <table class="table">
+                    <tbody>
+                      <% if user_signed_in? %>
+                       <tr>
+                          <th>name</th>
+                          <th><%= @user.name %></th>
+                       </tr>
+                       <tr>
+                          <th>introduction</th>
+                          <th><%= @user.introduction %></th>
+                       </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                  <!-- 編集ボタン -->
+                  <div class="row">
+                    <div class="col-xs-12">
+                    <%= link_to edit_user_path(@user.id) do %>
+                      <div class="btn btn-default btn-block">
+                        <span class="glyphicon glyphicon-wrench aria-hidden="true"></span>
+                      </div>
+                    <% end%>
+                    </div>
+                  </div>
+
+          <!-- 新規投稿フォーム -->
+          <div class="row">
+            <div class="col-xs-12">
+              <h2>New book</h2>
+                  <%= form_for(@book) do |f| %>
+                      <h4 class="form-title">Title</h4>
+                      <%= f.text_field :title, class: "form-control" %>
+
+                      <h4 class="form-body">Opinion</h4>
+                      <%= f.text_area :body, class: "form-control" %>
+
+                      <div class="col-xs-12 btn">
+                        <%= f.submit 'Create Book', class: "btn-primary form-control" %>
+                      </div>
+                  <% end %>
+                </div>
+              </div>
+          <!-- 新規投稿フォーム -->
+
+            </div>
+            <!-- ユーザー一覧 -->
+            <div class="col-xs-9">
+                <h2>Users</h2>
+                  <table class="table table-hover table-invrse">
+                      <thead>
+                        <tr>
+                          <th>image</th>
+                          <th>name</th>
+                          <th></th>
+                          <th colspan="3"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @users.each do |user| %>
+                          <tr>
+                              <td><%= attachment_image_tag user, :profile_image, :fill, 40, 40, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg", size:'40x40' %></td>
+                              <td><%= user.name %></td>
+                              <td></td>
+                              <td><%= link_to 'Show', user_path(user.id) %></td>
+                          </tr>
+                        <% end %>
+                        <%= paginate @users, class: "paginate" %>
+                      </tbody>
+                  </table>
+          <!-- ユーザー一覧 -->
+
+
+            </div>
+
+        </div>
+    </div>
+
+</section>
